@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SearchGPT - Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#7C3AED',
+secondary: '#4F46E5'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+.chat-container::-webkit-scrollbar {
+width: 6px;
+}
+.chat-container::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+.chat-container::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 3px;
+}
+.chat-container::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+[data-theme="dark"] {
+background-color: #1a1a1a;
+color: #ffffff;
+}
+[data-theme="dark"] .bg-white {
+background-color: #2d2d2d;
+}
+[data-theme="dark"] .border-gray-200 {
+border-color: #404040;
+}
+[data-theme="dark"] .text-gray-500 {
+color: #a0a0a0;
+}
+[data-theme="dark"] .hover\:bg-gray-100:hover {
+background-color: #363636;
+}
+[data-theme="dark"] .bg-gray-100 {
+background-color: #363636;
+}
+[data-theme="dark"] .bg-gray-50 {
+background-color: #1a1a1a;
+}
+[data-theme="dark"] .chat-container::-webkit-scrollbar-track {
+background: #2d2d2d;
+}
+[data-theme="dark"] .chat-container::-webkit-scrollbar-thumb {
+background: #666;
+}
+[data-theme="dark"] .chat-container::-webkit-scrollbar-thumb:hover {
+background: #888;
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div id="login-page" class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+<div class="text-center">
+<div class="flex items-center justify-center gap-2">
+<i class="ri-search-2-line text-4xl text-primary"></i>
+<h2 class="font-['Pacifico'] text-4xl text-primary mb-2">SearchGPT</h2>
+</div>
+<p class="text-gray-600">Sign in to your account</p>
+</div>
+<form id="login-form" class="mt-8 space-y-6">
+<div class="space-y-4">
+<div>
+<label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+<input id="email" name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+<div>
+<label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+<input id="password" name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+<label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+</div>
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-primary/80">Forgot your password?</a>
+</div>
+</div>
+<div>
+<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-button shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+Sign in
+</button>
+</div>
+</form>
+<div class="text-center">
+<p class="text-sm text-gray-600">Don't have an account?
+<a href="#" id="show-register" class="font-medium text-primary hover:text-primary/80">Sign up</a>
+</p>
+</div>
+</div>
+</div>
+<div id="register-page" class="hidden min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+<div class="text-center">
+<div class="flex items-center justify-center gap-2">
+<i class="ri-search-2-line text-4xl text-primary"></i>
+<h2 class="font-['Pacifico'] text-4xl text-primary mb-2">SearchGPT</h2>
+</div>
+<p class="text-gray-600">Create your account</p>
+</div>
+<form id="register-form" class="mt-8 space-y-6">
+<div class="space-y-4">
+<div>
+<label for="register-name" class="block text-sm font-medium text-gray-700">Full name</label>
+<input id="register-name" name="name" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+<div>
+<label for="register-email" class="block text-sm font-medium text-gray-700">Email address</label>
+<input id="register-email" name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+<div>
+<label for="register-password" class="block text-sm font-medium text-gray-700">Password</label>
+<input id="register-password" name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+<div>
+<label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm password</label>
+<input id="confirm-password" name="confirm-password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+</div>
+</div>
+<div>
+<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-button shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+Sign up
+</button>
+</div>
+</form>
+<div class="text-center">
+<p class="text-sm text-gray-600">Already have an account?
+<a href="#" id="show-login" class="font-medium text-primary hover:text-primary/80">Sign in</a>
+</p>
+</div>
+</div>
+</div>
+<div id="main-content" class="hidden flex h-screen">
+<aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+<div class="p-4 border-b border-gray-200">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<i class="ri-search-2-line text-2xl text-primary"></i>
+</div>
+<div>
+<div class="font-['Pacifico'] text-2xl text-primary">SearchGPT</div>
+<div class="text-sm text-gray-500 mt-1">by Pratham Kumar</div>
+</div>
+</div>
+</div>
+<button class="m-4 bg-primary text-white px-4 py-2 rounded-button flex items-center justify-center gap-2 cursor-pointer">
+<i class="ri-add-line w-5 h-5 flex items-center justify-center"></i>
+<span>New Chat</span>
+</button>
+<div class="flex-1 overflow-y-auto p-4 space-y-2">
+<div class="text-sm text-gray-500 mb-2">Recent Chats</div>
+<div id="chat-history"></div>
+<div class="mt-4 p-4 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+<div class="flex items-center justify-center">
+<img src="https://public.readdy.ai/ai/img_res/877f6a69b982c313ff0857028c54dde7.jpg" alt="AI Om Logo" class="w-16 h-16 rounded-full">
+</div>
+<div class="text-white text-center mt-2 font-medium">AI Enhanced Spiritual Guide</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-200">
+<div class="flex items-center gap-3 cursor-pointer hover:bg-gray-100 p-2 rounded">
+<img id="user-avatar" class="w-8 h-8 rounded-full" src="https://public.readdy.ai/ai/img_res/16b91f7e0e392d9d2234a700ce278443.jpg" alt="User Avatar">
+<div class="flex-1">
+<div class="text-sm font-medium" id="user-name">Sarah Anderson</div>
+<div class="text-xs text-gray-500" id="user-email">sarah@example.com</div>
+</div>
+<i class="ri-settings-3-line w-5 h-5 flex items-center justify-center"></i>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col">
+<header class="bg-white border-b border-gray-200 px-6 py-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="text-lg font-medium">Emotional Support Assistant</div>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<i class="ri-time-line"></i>
+<span id="current-time">Loading time...</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full cursor-pointer">
+<i class="ri-notification-3-line"></i>
+</button>
+<div class="relative group">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full cursor-pointer">
+<i class="ri-question-line"></i>
+</button>
+<div class="hidden group-hover:block absolute right-0 top-full mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-3 w-64 z-10">
+<div class="text-sm font-medium mb-2">Help Center</div>
+<div class="space-y-2">
+<a href="tel:+916200891887" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg">
+<i class="ri-phone-line"></i>
+<span class="text-sm">+91 6200891887</span>
+</a>
+<a href="mailto:rajpratham40@gmail.com" class="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-lg">
+<i class="ri-mail-line"></i>
+<span class="text-sm">rajpratham40@gmail.com</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex-1 overflow-hidden flex flex-col">
+<div class="chat-container flex-1 overflow-y-auto p-6 space-y-6" id="chat-messages"></div>
+<div class="p-6 bg-white border-t border-gray-200">
+<div class="max-w-3xl mx-auto relative">
+<div class="flex items-center gap-4 mb-4">
+<label class="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+<i class="ri-image-add-line w-4 h-4 flex items-center justify-center"></i>
+<span class="text-sm">Upload Image</span>
+<input type="file" id="image-upload" accept="image/*" class="hidden" />
+</label>
+<label class="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+<i class="ri-camera-line w-4 h-4 flex items-center justify-center"></i>
+<span class="text-sm">Scan Image</span>
+<input type="file" id="image-scan" accept="image/*" capture="environment" class="hidden" />
+</label>
+</div>
+<div id="image-preview" class="hidden mb-4">
+<div class="relative inline-block">
+<img id="preview" class="max-h-48 rounded-lg" />
+<button id="remove-image" class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center">
+<i class="ri-close-line"></i>
+</button>
+</div>
+</div>
+<textarea id="message-input" class="w-full border border-gray-300 rounded-lg pl-4 pr-12 py-3 focus:outline-none focus:border-primary resize-none" rows="1" placeholder="Type your message here..."></textarea>
+<button id="send-button" class="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:text-primary/80 cursor-pointer">
+<i class="ri-send-plane-fill w-6 h-6 flex items-center justify-center"></i>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div id="game-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div class="bg-white rounded-lg w-[480px]">
+<div class="p-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+<i class="ri-gamepad-line text-2xl text-white"></i>
+</div>
+<h2 class="text-xl font-semibold">Memory Game</h2>
+</div>
+<button onclick="toggleGame()" class="text-gray-500 hover:text-gray-700">
+<i class="ri-close-line w-6 h-6 flex items-center justify-center"></i>
+</button>
+</div>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-4 gap-4" id="memory-grid">
+</div>
+<div class="mt-6 text-center">
+<div class="flex items-center justify-center gap-8 mb-4">
+<div class="text-center">
+<p class="text-sm text-gray-500">Moves</p>
+<p class="text-2xl font-bold text-primary" id="moves-count">0</p>
+</div>
+<div class="text-center">
+<p class="text-sm text-gray-500">Matches</p>
+<p class="text-2xl font-bold text-green-500" id="matches-count">0</p>
+</div>
+<div class="text-center">
+<p class="text-sm text-gray-500">Time</p>
+<p class="text-2xl font-bold text-orange-500" id="time-count">0:00</p>
+</div>
+</div>
+<button onclick="startNewGame()" class="px-6 py-3 bg-primary text-white rounded-button text-lg font-medium hover:bg-primary/90 transition-colors">
+New Game
+</button>
+</div>
+</div>
+</div>
+</div>
+<div id="settings-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div class="bg-white rounded-lg w-96 max-h-[80vh] overflow-y-auto">
+<div class="p-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-semibold">Settings</h2>
+<button id="close-settings" class="text-gray-500 hover:text-gray-700">
+<i class="ri-close-line w-6 h-6 flex items-center justify-center"></i>
+</button>
+</div>
+</div>
+<div class="p-6 space-y-6">
+<div class="space-y-4">
+<h3 class="font-medium">Display Settings</h3>
+<div class="flex items-center gap-4">
+<button id="light-theme" class="flex-1 py-2 border rounded-button text-center cursor-pointer bg-primary text-white">Light</button>
+<button id="dark-theme" class="flex-1 py-2 border rounded-button text-center cursor-pointer">Dark</button>
+</div>
+<div class="space-y-2">
+<label class="flex items-center justify-between">
+<span>Brightness</span>
+<input type="range" id="brightness-control" min="50" max="100" value="100" class="w-32">
+</label>
+<label class="flex items-center justify-between">
+<span>Eye Comfort</span>
+<div class="relative inline-block w-12 h-6 rounded-full bg-gray-200">
+<input type="checkbox" id="eye-comfort" class="sr-only">
+<div class="absolute inset-1 rounded-full bg-white transition-transform duration-200 ease-in-out" id="eye-comfort-toggle"></div>
+</div>
+</label>
+</div>
+</div>
+<div class="space-y-6">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-medium cursor-pointer" onclick="toggleCalculator()">Calculator</h3>
+<div class="w-8 h-8 flex items-center justify-center cursor-pointer" onclick="toggleGame()">
+<i class="ri-gamepad-line"></i>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2 hidden" id="calculator-grid">
+<button class="col-span-4 bg-gray-100 h-12 rounded-lg text-right px-4 text-xl" id="calc-display">0</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="7">7</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="8">8</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="9">9</button>
+<button class="calc-btn bg-primary text-white h-12 rounded-lg hover:bg-primary/80" data-value="/">/</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="4">4</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="5">5</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="6">6</button>
+<button class="calc-btn bg-primary text-white h-12 rounded-lg hover:bg-primary/80" data-value="*">×</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="1">1</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="2">2</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="3">3</button>
+<button class="calc-btn bg-primary text-white h-12 rounded-lg hover:bg-primary/80" data-value="-">-</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value="0">0</button>
+<button class="calc-btn bg-gray-200 h-12 rounded-lg hover:bg-gray-300" data-value=".">.</button>
+<button class="calc-btn bg-primary text-white h-12 rounded-lg hover:bg-primary/80" data-value="=">=</button>
+<button class="calc-btn bg-primary text-white h-12 rounded-lg hover:bg-primary/80" data-value="+">+</button>
+<button class="calc-btn col-span-2 bg-red-500 text-white h-12 rounded-lg hover:bg-red-600" data-value="C">Clear</button>
+<button class="calc-btn col-span-2 bg-orange-500 text-white h-12 rounded-lg hover:bg-orange-600" data-value="←">Backspace</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-medium cursor-pointer" onclick="toggleAlarm()">Alarm</h3>
+<h3 class="font-medium cursor-pointer" onclick="toggleStopwatch()">Stopwatch</h3>
+</div>
+<div id="alarm-container" class="hidden space-y-4">
+<div class="flex items-center gap-4">
+<input type="time" id="alarm-time" class="flex-1 border rounded-lg px-4 py-2">
+<button id="set-alarm" class="bg-primary text-white px-4 py-2 rounded-button">Set Alarm</button>
+</div>
+<div class="space-y-2">
+<select id="alarm-sound" class="w-full border rounded-lg px-4 py-2 pr-8">
+<option value="bell">Bell Sound</option>
+<option value="digital">Digital Alarm</option>
+<option value="birds">Birds Chirping</option>
+<option value="ocean">Ocean Waves</option>
+<option value="forest">Forest Ambience</option>
+</select>
+<button id="test-sound" class="text-primary hover:text-primary/80 text-sm">Test Sound</button>
+</div>
+<div id="active-alarms" class="space-y-2"></div>
+</div>
+<div id="stopwatch-container" class="hidden space-y-4">
+<div class="text-center">
+<div class="text-4xl font-mono" id="stopwatch-display">00:00:00</div>
+<div class="flex items-center justify-center gap-4 mt-4">
+<button id="stopwatch-start" class="bg-primary text-white px-6 py-2 rounded-button">Start</button>
+<button id="stopwatch-pause" class="bg-orange-500 text-white px-6 py-2 rounded-button hidden">Pause</button>
+<button id="stopwatch-resume" class="bg-primary text-white px-6 py-2 rounded-button hidden">Resume</button>
+<button id="stopwatch-reset" class="bg-red-500 text-white px-6 py-2 rounded-button">Reset</button>
+</div>
+<div class="mt-4">
+<div class="text-sm font-medium mb-2">Lap Times</div>
+<div id="lap-times" class="space-y-2 max-h-40 overflow-y-auto"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="font-medium">Language</h3>
+<select class="w-full border rounded-lg px-4 py-2 pr-8">
+<option>English</option>
+<option>Hindi</option>
+<option>Bhojpuri</option>
+<option>Spanish</option>
+<option>French</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div id="toast" class="fixed top-4 right-4 max-w-xs bg-white border border-gray-200 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full">
+<div class="p-4">
+<div class="flex items-start">
+<div class="flex-shrink-0" id="toast-icon">
+</div>
+<div class="ml-3 w-0 flex-1">
+<p class="text-sm font-medium text-gray-900" id="toast-message"></p>
+</div>
+<div class="ml-4 flex-shrink-0 flex">
+<button class="inline-flex text-gray-400 hover:text-gray-500" onclick="hideToast()">
+<i class="ri-close-line w-5 h-5 flex items-center justify-center"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+// Backend simulation using localStorage
+const USERS_KEY = 'searchgpt_users';
+const CURRENT_USER_KEY = 'searchgpt_current_user';
+const SESSION_TOKEN_KEY = 'searchgpt_session_token';
+// Initialize users if not exists
+if (!localStorage.getItem(USERS_KEY)) {
+localStorage.setItem(USERS_KEY, JSON.stringify([]));
+}
+function generateToken() {
+return Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
+}
+function showToast(message, type = 'success') {
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toast-message');
+const toastIcon = document.getElementById('toast-icon');
+toastMessage.textContent = message;
+// Set icon based on type
+if (type === 'success') {
+toastIcon.innerHTML = '<i class="ri-checkbox-circle-fill w-6 h-6 flex items-center justify-center text-green-500"></i>';
+} else {
+toastIcon.innerHTML = '<i class="ri-error-warning-fill w-6 h-6 flex items-center justify-center text-red-500"></i>';
+}
+toast.classList.remove('translate-x-full');
+// Auto hide after 3 seconds
+setTimeout(hideToast, 3000);
+}
+function hideToast() {
+const toast = document.getElementById('toast');
+toast.classList.add('translate-x-full');
+}
+function validateEmail(email) {
+return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+function validatePassword(password) {
+return password.length >= 6;
+}
+function register(name, email, password) {
+const users = JSON.parse(localStorage.getItem(USERS_KEY));
+// Check if user already exists
+if (users.find(u => u.email === email)) {
+throw new Error('Email already registered');
+}
+// Create new user
+const newUser = {
+id: users.length + 1,
+name,
+email,
+password, // In a real app, this should be hashed
+createdAt: new Date().toISOString()
+};
+users.push(newUser);
+localStorage.setItem(USERS_KEY, JSON.stringify(users));
+return newUser;
+}
+function login(email, password) {
+const users = JSON.parse(localStorage.getItem(USERS_KEY));
+const user = users.find(u => u.email === email && u.password === password);
+if (!user) {
+throw new Error('Invalid email or password');
+}
+// Create session
+const token = generateToken();
+localStorage.setItem(SESSION_TOKEN_KEY, token);
+localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+return { user, token };
+}
+function logout() {
+localStorage.removeItem(SESSION_TOKEN_KEY);
+localStorage.removeItem(CURRENT_USER_KEY);
+}
+function checkAuth() {
+const token = localStorage.getItem(SESSION_TOKEN_KEY);
+const user = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+if (token && user) {
+return { user, token };
+}
+return null;
+}
+// Page navigation
+document.getElementById('show-register').addEventListener('click', (e) => {
+e.preventDefault();
+document.getElementById('login-page').classList.add('hidden');
+document.getElementById('register-page').classList.remove('hidden');
+});
+document.getElementById('show-login').addEventListener('click', (e) => {
+e.preventDefault();
+document.getElementById('register-page').classList.add('hidden');
+document.getElementById('login-page').classList.remove('hidden');
+});
+// Form submissions
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+const rememberMe = document.getElementById('remember-me').checked;
+try {
+if (!validateEmail(email)) {
+throw new Error('Invalid email format');
+}
+const { user, token } = login(email, password);
+if (rememberMe) {
+// In a real app, we would handle this differently
+localStorage.setItem('remember_me', token);
+}
+showToast('Login successful');
+// Show main content
+setTimeout(() => {
+document.getElementById('login-page').classList.add('hidden');
+document.getElementById('main-content').classList.remove('hidden');
+// Update user info in the main content
+document.getElementById('user-name').textContent = user.name;
+document.getElementById('user-email').textContent = user.email;
+}, 1000);
+} catch (error) {
+showToast(error.message, 'error');
+}
+});
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const name = document.getElementById('register-name').value;
+const email = document.getElementById('register-email').value;
+const password = document.getElementById('register-password').value;
+const confirmPassword = document.getElementById('confirm-password').value;
+try {
+if (!validateEmail(email)) {
+throw new Error('Invalid email format');
+}
+if (!validatePassword(password)) {
+throw new Error('Password must be at least 6 characters');
+}
+if (password !== confirmPassword) {
+throw new Error('Passwords do not match');
+}
+const user = register(name, email, password);
+showToast('Registration successful');
+// Switch to login page
+setTimeout(() => {
+document.getElementById('register-page').classList.add('hidden');
+document.getElementById('login-page').classList.remove('hidden');
+}, 1000);
+} catch (error) {
+showToast(error.message, 'error');
+}
+});
+// Check if user is already logged in
+window.addEventListener('DOMContentLoaded', () => {
+const auth = checkAuth();
+if (auth) {
+document.getElementById('login-page').classList.add('hidden');
+document.getElementById('main-content').classList.remove('hidden');
+// Update user info
+document.getElementById('user-name').textContent = auth.user.name;
+document.getElementById('user-email').textContent = auth.user.email;
+}
+});
+const mockChats = [
+{ id: 1, title: "Machine Learning Basics", timestamp: "2 hours ago" },
+{ id: 2, title: "Web Development Tips", timestamp: "Yesterday" },
+{ id: 3, title: "Data Science Projects", timestamp: "2 days ago" },
+];
+const mockMessages = [
+{ id: 1, role: "assistant", content: "I am SearchGPT, how can I help you? AGAR KUCH KARNE KA MAN NA HO TO SETTING ME JAAW BAHUT KUCH NAYA HAI.BUJHAYA....?", timestamp: "10:30 AM" }
+];
+async function searchWeb(query) {
+const knowledgeBase = {
+"engineering syllabus": "Engineering courses typically cover:\n\n1. Computer Science & IT:\n• Programming Languages (Java, Python, C++, JavaScript)\n  - Object-oriented programming concepts\n  - Functional programming paradigms\n  - Web development frameworks\n  - Mobile app development\n• Data Structures & Algorithms\n  - Arrays, Linked Lists, Trees, Graphs\n  - Sorting and searching algorithms\n  - Time and space complexity analysis\n  - Algorithm optimization techniques\n• Database Management\n  - Relational databases (MySQL, PostgreSQL)\n  - NoSQL databases (MongoDB, Redis)\n  - Database design and normalization\n  - Query optimization and indexing\n• Computer Networks\n  - OSI and TCP/IP models\n  - Network protocols and security\n  - Cloud computing and virtualization\n  - Network administration\n• Software Engineering\n  - Software development lifecycle\n  - Agile and DevOps methodologies\n  - Version control systems (Git)\n  - Testing and deployment strategies\n• Operating Systems\n  - Process management and scheduling\n  - Memory management and virtual memory\n  - File systems and I/O management\n  - System security and protection\n\n2. Mechanical Engineering:\n• Thermodynamics\n  - Laws of thermodynamics\n  - Heat engines and power cycles\n  - Refrigeration and air conditioning\n  - Energy conversion systems\n• Machine Design\n  - Mechanical components and mechanisms\n  - Stress analysis and material selection\n  - CAD tools and 3D modeling\n  - Design optimization techniques\n• Manufacturing Processes\n  - Traditional and modern manufacturing\n  - Automation and robotics\n  - Quality control and inspection\n  - Industry 4.0 technologies\n• Fluid Mechanics\n  - Fluid statics and dynamics\n  - Computational fluid dynamics\n  - Aerodynamics and propulsion\n  - Hydraulic systems\n• Heat Transfer\n  - Conduction, convection, radiation\n  - Heat exchangers and thermal systems\n  - Numerical heat transfer methods\n  - Thermal management\n• CAD/CAM\n  - Computer-aided design software\n  - Computer-aided manufacturing\n  - Rapid prototyping and 3D printing\n  - Product lifecycle management\n\n3. Electrical Engineering:\n• Circuit Theory\n  - DC and AC circuit analysis\n  - Network theorems and methods\n  - Transient and steady-state analysis\n  - Filter design and analysis\n• Power Systems\n  - Generation, transmission, distribution\n  - Power system stability and protection\n  - Smart grids and renewable energy\n  - Power quality and efficiency\n• Control Systems\n  - Classical and modern control theory\n  - PID controllers and feedback systems\n  - Digital control systems\n  - Robotics and automation\n• Digital Electronics\n  - Logic gates and Boolean algebra\n  - Sequential and combinational circuits\n  - FPGA and ASIC design\n  - Embedded systems\n• Microprocessors\n  - Architecture and organization\n  - Assembly language programming\n  - Interfacing and communication\n  - Real-time systems\n• Electromagnetic Theory\n  - Maxwell's equations\n  - Wave propagation and transmission\n  - Antenna design and RF systems\n  - EMC and shielding\n\n4. Civil Engineering:\n• Structural Engineering\n  - Structural analysis and design\n  - Concrete and steel structures\n  - Earthquake engineering\n  - Bridge and building design\n• Transportation Engineering\n  - Highway and railway engineering\n  - Traffic flow theory and management\n  - Transportation planning\n  - Intelligent transportation systems\n• Environmental Engineering\n  - Water and wastewater treatment\n  - Air pollution control\n  - Solid waste management\n  - Environmental impact assessment\n• Geotechnical Engineering\n  - Soil mechanics and foundation\n  - Rock mechanics and tunneling\n  - Ground improvement techniques\n  - Slope stability analysis\n• Construction Management\n  - Project planning and scheduling\n  - Cost estimation and control\n  - Contract management\n  - Safety and quality management\n• Surveying\n  - Land surveying and GPS\n  - Remote sensing and GIS\n  - Photogrammetry\n  - Digital mapping techniques",
+"bhojpuri": "Bhojpuri is a language spoken in parts of India and Nepal. Here are some common phrases:\n\n• Greetings:\n  - Pranam (प्रणाम) - Hello/Namaste\n  - Ka haal ba (का हाल बा) - How are you?\n  - Theek ba (ठीक बा) - I'm fine\n\n• Basic Words:\n  - Haan (हाँ) - Yes\n  - Na (ना) - No\n  - Dhanyavaad (धन्यवाद) - Thank you\n  - Kripya (कृपया) - Please\n\n• Common Phrases:\n  - Aap ke naam ka ba? (आप के नाम का बा?) - What is your name?\n  - Hamar naam ... ba (हमार नाम ... बा) - My name is ...\n  - Kahan se aayil bani? (कहाँ से आइल बानी?) - Where are you from?\n  - Khana khayil? (खाना खइलऽ?) - Have you eaten?\n\n• Numbers:\n  - Ek (एक) - One\n  - Dui (दुई) - Two\n  - Teen (तीन) - Three\n  - Chaar (चार) - Four\n  - Paanch (पाँच) - Five\n\n• Cultural Terms:\n  - Chhath Puja (छठ पूजा) - Important festival\n  - Kajri (कजरी) - Folk song style\n  - Birha (बिरहा) - Folk music genre\n  - Parv (पर्व) - Festival\n\n• Family Terms:\n  - Babuji (बाबूजी) - Father\n  - Maiya (मइया) - Mother\n  - Bhaiya (भइया) - Brother\n  - Didiya (दिदिया) - Sister\n  - Kaka (काका) - Uncle\n  - Kaki (काकी) - Aunt",
+"medical syllabus": "Medical (MBBS) curriculum includes:\n\n1. Pre-Clinical (1st & 2nd Year):\n• Anatomy\n  - Gross anatomy and dissection\n  - Histology and microscopic anatomy\n  - Embryology and developmental biology\n  - Neuroanatomy and brain structure\n  - Surface anatomy and imaging\n• Physiology\n  - Cellular and molecular physiology\n  - Cardiovascular system\n  - Respiratory system\n  - Nervous system and special senses\n  - Endocrine and reproductive systems\n  - Gastrointestinal physiology\n  - Renal physiology and acid-base balance\n• Biochemistry\n  - Protein structure and function\n  - Carbohydrate metabolism\n  - Lipid biochemistry\n  - Nucleic acids and molecular biology\n  - Clinical biochemistry and diagnostics\n• Basic Life Support\n  - Cardiopulmonary resuscitation\n  - Emergency response protocols\n  - First aid techniques\n  - Medical ethics and communication\n\n2. Para-Clinical (3rd Year):\n• Pathology\n  - General pathology mechanisms\n  - Systemic pathology\n  - Hematology and blood banking\n  - Cytology and histopathology\n  - Molecular pathology techniques\n• Microbiology\n  - Bacteriology and bacterial diseases\n  - Virology and viral infections\n  - Parasitology and tropical diseases\n  - Immunology and serology\n  - Hospital infection control\n• Pharmacology\n  - General pharmacology principles\n  - System-wise drug therapy\n  - Clinical pharmacology\n  - Toxicology and adverse effects\n  - Rational drug prescribing\n• Forensic Medicine\n  - Medical jurisprudence\n  - Forensic pathology\n  - Toxicology analysis\n  - Medical ethics and law\n\n3. Clinical (4th & 5th Year):\n• Medicine\n  - Internal medicine\n  - Cardiology and respiratory medicine\n  - Gastroenterology and hepatology\n  - Neurology and nephrology\n  - Endocrinology and metabolism\n  - Emergency medicine\n• Surgery\n  - General surgery principles\n  - Specialized surgical procedures\n  - Pre and post-operative care\n  - Surgical oncology\n  - Minimally invasive surgery\n• Pediatrics\n  - Child growth and development\n  - Pediatric diseases and disorders\n  - Neonatal care\n  - Pediatric emergencies\n  - Immunization and preventive care\n• Obstetrics & Gynecology\n  - Normal and complicated pregnancy\n  - Labor and delivery management\n  - Gynecological disorders\n  - Reproductive medicine\n  - Family planning\n• Orthopedics\n  - Musculoskeletal disorders\n  - Trauma management\n  - Joint replacement surgery\n  - Sports medicine\n  - Rehabilitation\n• Psychiatry\n  - Mental health disorders\n  - Psychotherapy techniques\n  - Psychopharmacology\n  - Child and adolescent psychiatry\n  - Addiction medicine\n• Community Medicine\n  - Public health and epidemiology\n  - Environmental health\n  - Occupational health\n  - Health administration\n  - Preventive medicine\n\n4. Internship (1 Year):\n• Rotational training in various departments\n  - Emergency medicine (2 months)\n  - Internal medicine (2 months)\n  - Surgery (2 months)\n  - Obstetrics & Gynecology (2 months)\n  - Pediatrics (1 month)\n  - Community medicine (1 month)\n  - Rural health posting (2 months)\n  \nAdditional Clinical Skills:\n• Patient examination and history taking\n• Diagnostic test interpretation\n• Medical procedures and interventions\n• Communication and counseling skills\n• Medical documentation and records\n• Evidence-based medicine practice\n• Healthcare technology usage\n• Team-based patient care",
+"law syllabus": "Law degree curriculum covers:\n\n1. Constitutional Law:\n• Fundamental Rights\n• State Structure\n• Constitutional Remedies\n\n2. Criminal Law:\n• Indian Penal Code\n• Criminal Procedure\n• Evidence Law\n\n3. Civil Law:\n• Contract Law\n• Property Law\n• Family Law\n• Tort Law\n\n4. Corporate Law:\n• Company Law\n• Banking Law\n• Securities Law\n• Competition Law\n\n5. International Law:\n• Public International Law\n• Private International Law\n• Human Rights Law",
+"management syllabus": "Business Management courses include:\n\n1. Core Subjects:\n• Marketing Management\n• Financial Management\n• Human Resource Management\n• Operations Management\n• Strategic Management\n• Business Analytics\n\n2. Functional Areas:\n• Digital Marketing\n• Investment Banking\n• Supply Chain Management\n• Project Management\n• Entrepreneurship\n\n3. Soft Skills:\n• Leadership\n• Communication\n• Negotiation\n• Team Management\n• Decision Making\n\n4. Specializations:\n• Finance\n• Marketing\n• HR\n• Operations\n• International Business",
+"world map": "I can help you explore the world map! The world is divided into 7 continents: Asia, Africa, North America, South America, Antarctica, Europe, and Australia. There are 5 oceans: Pacific, Atlantic, Indian, Southern, and Arctic. Would you like to learn about specific countries, capitals, or geographical features?",
+"food": "There are countless cuisines around the world! Some popular categories include:\n• Italian (pasta, pizza, risotto)\n• Chinese (dim sum, noodles, stir-fry)\n• Japanese (sushi, ramen, tempura)\n• Indian (curry, biryani, tandoori)\n• Mexican (tacos, enchiladas, guacamole)\n• Mediterranean (hummus, falafel, kebab)\nWhat type of cuisine interests you?",
+"clothing": "Fashion varies greatly across cultures and occasions:\n• Formal wear (suits, gowns, tuxedos)\n• Casual wear (jeans, t-shirts, dresses)\n• Traditional clothing (kimono, sari, hanbok)\n• Athletic wear (moisture-wicking fabrics, compression gear)\n• Seasonal fashion (winter coats, summer dresses)\nWhat style would you like to learn more about?",
+"games": "Gaming encompasses many categories:\n• Video Games (PC, console, mobile)\n• Board Games (strategy, party, classic)\n• Card Games (poker, bridge, collectible)\n• Sports Games (football, basketball, esports)\n• RPGs (tabletop, digital)\nWhich type interests you?",
+"phones": "Mobile phones come in various categories:\n• Flagship (iPhone Pro, Samsung S-series)\n• Mid-range (Google Pixel a-series)\n• Budget-friendly options\n• Gaming phones\n• Foldable devices\nWhat specific information do you need?",
+"laptops": "Laptops are categorized by use:\n• Gaming laptops (high-performance GPU)\n• Business laptops (reliability, security)\n• Student laptops (affordable, portable)\n• Creative laptops (color accuracy, power)\n• Ultrabooks (thin, lightweight)\nWhat's your use case?",
+"tablets": "Tablets serve different purposes:\n• iPad (iOS ecosystem)\n• Android tablets (versatility)\n• Windows tablets (productivity)\n• Drawing tablets (creative work)\n• E-readers (reading focus)\nWhat are you looking for?",
+"biology": "Biology covers life sciences:\n• Cell biology (structure, function)\n• Genetics (DNA, inheritance)\n• Ecology (ecosystems, environment)\n• Evolution (natural selection)\n• Human anatomy (body systems)\nWhat aspect interests you?",
+"physics": "Physics explains natural phenomena:\n• Mechanics (motion, forces)\n• Thermodynamics (heat, energy)\n• Electromagnetism (electricity, magnetism)\n• Quantum physics (atomic level)\n• Relativity (space-time)\nWhat would you like to explore?",
+"fitness": "Fitness includes various aspects:\n• Strength training (weights, resistance)\n• Cardio (running, cycling)\n• Flexibility (yoga, stretching)\n• Nutrition (diet, supplements)\n• Recovery (rest, rehabilitation)\nWhat's your fitness goal?",
+"animals": "The animal kingdom is diverse:\n• Mammals (dogs, cats, whales)\n• Birds (eagles, penguins)\n• Reptiles (snakes, lizards)\n• Fish (salmon, sharks)\n• Insects (butterflies, bees)\nWhich animals interest you?",
+"i feel lonely": "I understand feeling lonely can be really difficult. Remember that your feelings are valid, and it's okay to feel this way. Consider joining social groups, reaching out to friends or family, or trying new activities to meet people. Would you like to talk more about what's making you feel lonely?",
+"relationship advice": "Relationships can be complex and challenging. The key is open communication, mutual respect, and understanding. Whether you're looking to start a relationship or improve an existing one, focus on being honest about your feelings and needs. What specific relationship concerns would you like to discuss?",
+"dating tips": "Dating can be both exciting and nerve-wracking. Be yourself, show genuine interest in getting to know the other person, and communicate openly about your intentions. Remember that building a meaningful connection takes time. Would you like more specific dating advice?",
+"breakup support": "Going through a breakup is never easy. It's normal to feel hurt, angry, or confused. Give yourself time to heal and process your emotions. Focus on self-care and remember that seeking support from friends, family, or a professional is perfectly okay. How are you coping with the situation?",
+"lgbtq+ support": "Your identity is valid and worthy of respect. Whether you're exploring your identity, coming out, or seeking connection with the LGBTQ+ community, know that you're not alone. There are many supportive communities and resources available. Would you like to discuss anything specific?",
+"what is javascript": "JavaScript is a high-level, interpreted programming language primarily used for creating interactive effects within web browsers. It's one of the core technologies of the World Wide Web, alongside HTML and CSS.",
+"how to learn programming": "To learn programming: 1. Choose a programming language (Python/JavaScript recommended for beginners) 2. Learn the basics through online courses 3. Practice coding daily 4. Build small projects 5. Join coding communities 6. Read documentation and tutorials",
+"what is artificial intelligence": "Artificial Intelligence (AI) is the simulation of human intelligence by machines, particularly computer systems. It includes machine learning, natural language processing, computer vision, and robotics.",
+"what is machine learning": "Machine Learning is a subset of AI that enables systems to learn and improve from experience without being explicitly programmed. It uses statistical techniques to give computers the ability to 'learn'.",
+"what is cloud computing": "Cloud computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ('the cloud') to offer faster innovation, flexible resources, and economies of scale.",
+"what is blockchain": "Blockchain is a decentralized, distributed ledger technology that records transactions across multiple computers securely. It's the underlying technology behind cryptocurrencies like Bitcoin.",
+"what is data science": "Data Science combines statistics, mathematics, programming, and domain expertise to extract meaningful insights from data. It involves data collection, cleaning, analysis, and visualization.",
+"what is cybersecurity": "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These attacks usually aim to access, change, or destroy sensitive information or disrupt business processes.",
+"what is 5g": "5G is the fifth generation of cellular network technology, offering faster data speeds, lower latency, and the ability to connect more devices simultaneously than previous generations.",
+"what is quantum computing": "Quantum computing uses quantum mechanics principles to process information, potentially solving complex problems much faster than classical computers through quantum bits (qubits).",
+"what is internet of things": "The Internet of Things (IoT) refers to the network of physical objects embedded with sensors, software, and other technologies that enable them to connect and exchange data with other devices over the internet.",
+"what is virtual reality": "Virtual Reality (VR) is a simulated experience that can be similar to or completely different from the real world. It uses head-mounted displays and motion tracking to create the illusion of presence in a virtual environment.",
+"what is augmented reality": "Augmented Reality (AR) overlays digital content onto the real world, enhancing the user's perception of reality with computer-generated information, images, or interactive elements.",
+"what is big data": "Big Data refers to extremely large datasets that can be analyzed computationally to reveal patterns, trends, and associations, particularly relating to human behavior and interactions.",
+"what is devops": "DevOps is a set of practices that combines software development (Dev) and IT operations (Ops), aiming to shorten the development lifecycle and provide continuous delivery with high software quality.",
+"what is api": "An API (Application Programming Interface) is a set of rules and protocols that allows different software applications to communicate with each other, enabling integration and data exchange.",
+"what is sql": "SQL (Structured Query Language) is a standard language for managing and manipulating relational databases. It's used for tasks like querying data, updating records, and managing database structures.",
+"what is html": "HTML (HyperText Markup Language) is the standard markup language for creating web pages and web applications. It defines the structure and layout of a web document.",
+"what is css": "CSS (Cascading Style Sheets) is a style sheet language used for describing the presentation of a document written in HTML. It controls the visual appearance of web pages.",
+"what is python": "Python is a high-level, interpreted programming language known for its simplicity and readability. It's widely used in web development, data science, AI, and automation."
+};
+const defaultResponse = "I'll help you find information about that. Could you please be more specific with your question? I can assist in multiple languages including English, Hindi, and Bhojpuri.";
+try {
+const normalizedQuery = query.toLowerCase().trim();
+// Check for exact matches
+if (knowledgeBase[normalizedQuery]) {
+return knowledgeBase[normalizedQuery];
+}
+// Check for partial matches
+for (const [key, value] of Object.entries(knowledgeBase)) {
+if (normalizedQuery.includes(key) || key.includes(normalizedQuery)) {
+return value;
+}
+}
+// Generate a contextual response for questions
+if (normalizedQuery.startsWith("how") ||
+normalizedQuery.startsWith("what") ||
+normalizedQuery.startsWith("why") ||
+normalizedQuery.startsWith("when") ||
+normalizedQuery.startsWith("where")) {
+return `Let me help you understand ${normalizedQuery}. Based on current knowledge, ${defaultResponse}`;
+}
+return defaultResponse;
+} catch (error) {
+console.error('Search error:', error);
+return "I'm here to help! Could you please rephrase your question?";
+}
+}
+function renderChatHistory() {
+const chatHistory = document.getElementById('chat-history');
+chatHistory.innerHTML = mockChats.map(chat => `
+<div class="flex items-center gap-3 p-2 hover:bg-gray-100 rounded cursor-pointer">
+<i class="ri-message-3-line w-5 h-5 flex items-center justify-center"></i>
+<div class="flex-1 min-w-0">
+<div class="text-sm font-medium truncate">${chat.title}</div>
+<div class="text-xs text-gray-500">${chat.timestamp}</div>
+</div>
+</div>
+`).join('');
+}
+function renderMessages() {
+const chatMessages = document.getElementById('chat-messages');
+chatMessages.innerHTML = mockMessages.map(message => `
+<div class="flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}">
+<div class="max-w-[70%] ${message.role === 'user' ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white' : 'bg-gray-100'} rounded-lg px-4 py-2">
+<div class="text-sm">${message.content}</div>
+<div class="text-xs ${message.role === 'user' ? 'text-white/80' : 'text-gray-500'} mt-1">${message.timestamp}</div>
+</div>
+</div>
+`).join('');
+chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+function toggleCalculator() {
+const calculatorGrid = document.getElementById('calculator-grid');
+calculatorGrid.classList.toggle('hidden');
+}
+function toggleAlarm() {
+const alarmContainer = document.getElementById('alarm-container');
+const stopwatchContainer = document.getElementById('stopwatch-container');
+alarmContainer.classList.toggle('hidden');
+stopwatchContainer.classList.add('hidden');
+}
+function toggleStopwatch() {
+const alarmContainer = document.getElementById('alarm-container');
+const stopwatchContainer = document.getElementById('stopwatch-container');
+stopwatchContainer.classList.toggle('hidden');
+alarmContainer.classList.add('hidden');
+}
+let stopwatchInterval;
+let stopwatchTime = 0;
+let isRunning = false;
+let lapTimes = [];
+function updateStopwatchDisplay() {
+const hours = Math.floor(stopwatchTime / 3600);
+const minutes = Math.floor((stopwatchTime % 3600) / 60);
+const seconds = stopwatchTime % 60;
+document.getElementById('stopwatch-display').textContent =
+`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+function startStopwatch() {
+if (!isRunning) {
+isRunning = true;
+document.getElementById('stopwatch-start').classList.add('hidden');
+document.getElementById('stopwatch-pause').classList.remove('hidden');
+stopwatchInterval = setInterval(() => {
+stopwatchTime++;
+updateStopwatchDisplay();
+}, 1000);
+}
+}
+function pauseStopwatch() {
+if (isRunning) {
+isRunning = false;
+clearInterval(stopwatchInterval);
+document.getElementById('stopwatch-pause').classList.add('hidden');
+document.getElementById('stopwatch-resume').classList.remove('hidden');
+}
+}
+function resumeStopwatch() {
+if (!isRunning) {
+isRunning = true;
+document.getElementById('stopwatch-resume').classList.add('hidden');
+document.getElementById('stopwatch-pause').classList.remove('hidden');
+stopwatchInterval = setInterval(() => {
+stopwatchTime++;
+updateStopwatchDisplay();
+}, 1000);
+}
+}
+function resetStopwatch() {
+clearInterval(stopwatchInterval);
+stopwatchTime = 0;
+isRunning = false;
+lapTimes = [];
+updateStopwatchDisplay();
+document.getElementById('stopwatch-start').classList.remove('hidden');
+document.getElementById('stopwatch-pause').classList.add('hidden');
+document.getElementById('stopwatch-resume').classList.add('hidden');
+document.getElementById('lap-times').innerHTML = '';
+}
+function addLapTime() {
+if (isRunning) {
+const lapTime = stopwatchTime;
+lapTimes.push(lapTime);
+const lapElement = document.createElement('div');
+lapElement.className = 'flex justify-between items-center bg-gray-100 p-2 rounded';
+lapElement.innerHTML = `
+<span>Lap ${lapTimes.length}</span>
+<span>${document.getElementById('stopwatch-display').textContent}</span>
+`;
+document.getElementById('lap-times').prepend(lapElement);
+}
+}
+document.getElementById('stopwatch-start').addEventListener('click', startStopwatch);
+document.getElementById('stopwatch-pause').addEventListener('click', pauseStopwatch);
+document.getElementById('stopwatch-resume').addEventListener('click', resumeStopwatch);
+document.getElementById('stopwatch-reset').addEventListener('click', resetStopwatch);
+document.addEventListener('DOMContentLoaded', () => {
+renderChatHistory();
+renderMessages();
+// Memory Game Logic
+let cards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+let moves = 0;
+let gameTimer = null;
+let gameTime = 0;
+const emojis = ['🎮', '🎲', '🎯', '🎪', '🎨', '🎭', '🎪', '🎯'];
+function initGame() {
+cards = [];
+flippedCards = [];
+matchedPairs = 0;
+moves = 0;
+gameTime = 0;
+if (gameTimer) clearInterval(gameTimer);
+// Create and shuffle cards
+const cardPairs = [...emojis, ...emojis];
+for (let i = cardPairs.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[cardPairs[i], cardPairs[j]] = [cardPairs[j], cardPairs[i]];
+}
+// Create card elements
+const grid = document.getElementById('memory-grid');
+grid.innerHTML = '';
+cardPairs.forEach((emoji, index) => {
+const card = document.createElement('div');
+card.className = 'h-24 bg-white rounded-lg shadow-md cursor-pointer transform transition-transform duration-300 hover:scale-105';
+card.innerHTML = `
+<div class="w-full h-full flex items-center justify-center text-3xl flip-card">
+<div class="flip-card-inner">
+<div class="flip-card-front bg-gradient-to-br from-primary to-secondary rounded-lg"></div>
+<div class="flip-card-back bg-white rounded-lg">${emoji}</div>
+</div>
+</div>
+`;
+card.dataset.index = index;
+card.dataset.emoji = emoji;
+card.addEventListener('click', () => flipCard(card));
+grid.appendChild(card);
+cards.push(card);
+});
+updateStats();
+startTimer();
+}
+function flipCard(card) {
+if (flippedCards.length === 2 || flippedCards.includes(card) || card.classList.contains('matched')) {
+return;
+}
+card.classList.add('flipped');
+flippedCards.push(card);
+if (flippedCards.length === 2) {
+moves++;
+updateStats();
+if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+matchedPairs++;
+flippedCards.forEach(card => card.classList.add('matched'));
+flippedCards = [];
+if (matchedPairs === emojis.length) {
+clearInterval(gameTimer);
+setTimeout(() => {
+showToast('Congratulations! You won!', 'success');
+}, 500);
+}
+} else {
+setTimeout(() => {
+flippedCards.forEach(card => card.classList.remove('flipped'));
+flippedCards = [];
+}, 1000);
+}
+}
+}
+function startTimer() {
+if (gameTimer) clearInterval(gameTimer);
+gameTimer = setInterval(() => {
+gameTime++;
+updateStats();
+}, 1000);
+}
+function updateStats() {
+document.getElementById('moves-count').textContent = moves;
+document.getElementById('matches-count').textContent = matchedPairs;
+document.getElementById('time-count').textContent = `${Math.floor(gameTime / 60)}:${(gameTime % 60).toString().padStart(2, '0')}`;
+}
+function startNewGame() {
+initGame();
+}
+// Add styles for flip animation
+const style = document.createElement('style');
+style.textContent = `
+.flip-card {
+perspective: 1000px;
+}
+.flip-card-inner {
+position: relative;
+width: 100%;
+height: 100%;
+text-align: center;
+transition: transform 0.6s;
+transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+position: absolute;
+width: 100%;
+height: 100%;
+backface-visibility: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.flip-card-back {
+transform: rotateY(180deg);
+}
+.matched {
+opacity: 0.7;
+cursor: default;
+}
+`;
+document.head.appendChild(style);
+window.toggleGame = function() {
+const gameModal = document.getElementById('game-modal');
+if (gameModal.classList.contains('hidden')) {
+gameModal.classList.remove('hidden');
+if (!gameBoard.length) {
+initGame();
+}
+} else {
+gameModal.classList.add('hidden');
+}
+}
+window.toggleGame = function() {
+const gameModal = document.getElementById('game-modal');
+if (gameModal.classList.contains('hidden')) {
+gameModal.classList.remove('hidden');
+initGame();
+} else {
+gameModal.classList.add('hidden');
+if (gameTimer) clearInterval(gameTimer);
+}
+}
+const lightTheme = document.getElementById('light-theme');
+const darkTheme = document.getElementById('dark-theme');
+const alarmTime = document.getElementById('alarm-time');
+const setAlarm = document.getElementById('set-alarm');
+const alarmSound = document.getElementById('alarm-sound');
+const testSound = document.getElementById('test-sound');
+const activeAlarms = document.getElementById('active-alarms');
+let alarms = [];
+const sounds = {
+bell: 'https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3',
+digital: 'https://assets.mixkit.co/active_storage/sfx/2870/2870-preview.mp3',
+birds: 'https://assets.mixkit.co/active_storage/sfx/2871/2871-preview.mp3',
+ocean: 'https://assets.mixkit.co/active_storage/sfx/2872/2872-preview.mp3',
+forest: 'https://assets.mixkit.co/active_storage/sfx/2873/2873-preview.mp3'
+};
+function toggleTheme(theme) {
+document.documentElement.setAttribute('data-theme', theme);
+document.body.setAttribute('data-theme', theme);
+if (theme === 'dark') {
+lightTheme.classList.remove('bg-primary', 'text-white');
+darkTheme.classList.add('bg-primary', 'text-white');
+} else {
+darkTheme.classList.remove('bg-primary', 'text-white');
+lightTheme.classList.add('bg-primary', 'text-white');
+}
+localStorage.setItem('theme', theme);
+}
+function updateBrightness(value) {
+document.documentElement.style.filter = `brightness(${value}%)`;
+localStorage.setItem('brightness', value);
+}
+function toggleEyeComfort(enabled) {
+if (enabled) {
+document.documentElement.style.filter = `${document.documentElement.style.filter} sepia(20%) brightness(95%)`;
+} else {
+document.documentElement.style.filter = document.documentElement.style.filter.replace(' sepia(20%) brightness(95%)', '');
+}
+localStorage.setItem('eyeComfort', enabled);
+}
+// Initialize brightness and eye comfort controls
+const brightnessControl = document.getElementById('brightness-control');
+const eyeComfortCheckbox = document.getElementById('eye-comfort');
+const eyeComfortToggle = document.getElementById('eye-comfort-toggle');
+brightnessControl.addEventListener('input', (e) => {
+updateBrightness(e.target.value);
+});
+eyeComfortCheckbox.addEventListener('change', (e) => {
+toggleEyeComfort(e.target.checked);
+eyeComfortToggle.style.transform = e.target.checked ? 'translateX(24px)' : 'translateX(0)';
+});
+// Load saved settings
+const savedBrightness = localStorage.getItem('brightness');
+if (savedBrightness) {
+brightnessControl.value = savedBrightness;
+updateBrightness(savedBrightness);
+}
+const savedEyeComfort = localStorage.getItem('eyeComfort') === 'true';
+eyeComfortCheckbox.checked = savedEyeComfort;
+eyeComfortToggle.style.transform = savedEyeComfort ? 'translateX(24px)' : 'translateX(0)';
+if (savedEyeComfort) {
+toggleEyeComfort(true);
+}
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+toggleTheme(savedTheme);
+}
+lightTheme.addEventListener('click', () => toggleTheme('light'));
+darkTheme.addEventListener('click', () => toggleTheme('dark'));
+function playSound(soundType) {
+const audio = new Audio(sounds[soundType]);
+audio.play();
+}
+function renderAlarms() {
+activeAlarms.innerHTML = alarms.map((alarm, index) => `
+<div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+<div>
+<div class="font-medium">${alarm.time}</div>
+<div class="text-sm text-gray-500">${alarm.sound}</div>
+</div>
+<button onclick="removeAlarm(${index})" class="text-red-500 hover:text-red-700">
+<i class="ri-delete-bin-line w-5 h-5 flex items-center justify-center"></i>
+</button>
+</div>
+`).join('');
+}
+function removeAlarm(index) {
+alarms.splice(index, 1);
+renderAlarms();
+}
+window.removeAlarm = removeAlarm;
+testSound.addEventListener('click', () => {
+playSound(alarmSound.value);
+});
+setAlarm.addEventListener('click', () => {
+if (alarmTime.value) {
+alarms.push({
+time: alarmTime.value,
+sound: alarmSound.value
+});
+renderAlarms();
+alarmTime.value = '';
+}
+});
+let calcDisplay = '0';
+let lastOperation = null;
+let lastNumber = null;
+let newNumber = true;
+function updateCalcDisplay() {
+document.getElementById('calc-display').textContent = calcDisplay;
+}
+function handleCalcButton(value) {
+if ('0123456789.'.includes(value)) {
+if (newNumber) {
+calcDisplay = value;
+newNumber = false;
+} else {
+if (value === '.' && calcDisplay.includes('.')) return;
+if (calcDisplay === '0' && value !== '.') {
+calcDisplay = value;
+} else {
+calcDisplay += value;
+}
+}
+} else if ('+-*/'.includes(value)) {
+if (lastOperation && !newNumber) {
+calculate();
+}
+lastOperation = value;
+lastNumber = parseFloat(calcDisplay);
+newNumber = true;
+} else if (value === '=') {
+if (lastOperation && !newNumber) {
+calculate();
+lastOperation = null;
+}
+newNumber = true;
+} else if (value === 'C') {
+calcDisplay = '0';
+lastOperation = null;
+lastNumber = null;
+newNumber = true;
+} else if (value === '←') {
+if (!newNumber) {
+calcDisplay = calcDisplay.slice(0, -1);
+if (calcDisplay === '' || calcDisplay === '-') calcDisplay = '0';
+}
+}
+// Handle errors and display updates
+if (calcDisplay === 'Error') {
+lastOperation = null;
+lastNumber = null;
+newNumber = true;
+}
+updateCalcDisplay();
+}
+function calculate() {
+const currentNumber = parseFloat(calcDisplay);
+let result;
+switch (lastOperation) {
+case '+':
+result = lastNumber + currentNumber;
+break;
+case '-':
+result = lastNumber - currentNumber;
+break;
+case '*':
+result = lastNumber * currentNumber;
+break;
+case '/':
+if (currentNumber === 0) {
+calcDisplay = 'Error';
+return;
+}
+result = lastNumber / currentNumber;
+break;
+}
+if (isNaN(result) || !isFinite(result)) {
+calcDisplay = 'Error';
+} else {
+// Handle floating point precision
+result = Math.round(result * 1000000) / 1000000;
+calcDisplay = String(result);
+// Update for next operation
+lastNumber = result;
+}
+}
+function checkAlarms() {
+const now = new Date();
+const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+alarms.forEach((alarm, index) => {
+if (alarm.time === currentTime) {
+playSound(alarm.sound);
+removeAlarm(index);
+}
+});
+}
+// Add calculator event listeners
+document.querySelectorAll('.calc-btn').forEach(button => {
+button.addEventListener('click', () => {
+handleCalcButton(button.dataset.value);
+});
+});
+// Add keyboard support for calculator
+document.addEventListener('keydown', (e) => {
+const key = e.key;
+if ('0123456789.+-*/'.includes(key) || key === 'Enter' || key === 'Backspace' || key === 'Escape') {
+e.preventDefault();
+if (key === 'Enter') handleCalcButton('=');
+else if (key === 'Backspace') handleCalcButton('←');
+else if (key === 'Escape') handleCalcButton('C');
+else handleCalcButton(key);
+}
+});
+setInterval(checkAlarms, 1000);
+function updateDateTime() {
+const now = new Date();
+document.getElementById('current-time').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+function getLocation() {
+// Location functionality removed
+}
+updateDateTime();
+setInterval(updateDateTime, 60000);
+const imageUpload = document.getElementById('image-upload');
+const imageScan = document.getElementById('image-scan');
+const imagePreview = document.getElementById('image-preview');
+const preview = document.getElementById('preview');
+const removeImage = document.getElementById('remove-image');
+let currentImage = null;
+function handleImage(file) {
+if (file) {
+const reader = new FileReader();
+reader.onload = function(e) {
+preview.src = e.target.result;
+imagePreview.classList.remove('hidden');
+currentImage = file;
+};
+reader.readAsDataURL(file);
+}
+}
+imageUpload.addEventListener('change', (e) => handleImage(e.target.files[0]));
+imageScan.addEventListener('change', (e) => handleImage(e.target.files[0]));
+removeImage.addEventListener('click', () => {
+imagePreview.classList.add('hidden');
+preview.src = '';
+currentImage = null;
+imageUpload.value = '';
+imageScan.value = '';
+});
+async function analyzeImage(image) {
+const imageAnalyses = {
+"document": "This appears to be a document containing text. I can see clear paragraphs and formatting. The main topic seems to be about technical documentation or business content.",
+"chart": "I can see a data visualization chart. It appears to show trends or comparisons with clear data points and axes labels. The visualization type looks like a professional business chart.",
+"diagram": "This image contains a detailed diagram with multiple components and connections. It appears to be a technical or process flow diagram with clear labels and structure.",
+"screenshot": "This looks like a screenshot of a software interface or website. I can see various UI elements including buttons, menus, and text content arranged in a user-friendly layout.",
+"photo": "This is a high-quality photograph with good composition and lighting. The subject matter is clear and well-focused, showing good detail and color balance.",
+"code": "I can see programming code in this image. The syntax appears to be well-formatted and includes common programming constructs and patterns.",
+"presentation": "This appears to be a presentation slide with a clear title, bullet points, and possibly some graphics or charts integrated into the layout.",
+"infographic": "This is an infographic combining text and visual elements to present information in an engaging way. It includes icons, data visualizations, and explanatory text.",
+"whiteboard": "This looks like a whiteboard or sketch containing hand-drawn diagrams, notes, and possibly some mathematical equations or process flows.",
+"technical": "This is a technical drawing or schematic with precise measurements, annotations, and detailed specifications of components."
+};
+// Simulate image recognition by randomly selecting a relevant analysis
+const imageTypes = Object.keys(imageAnalyses);
+const detectedType = imageTypes[Math.floor(Math.random() * imageTypes.length)];
+const analysis = imageAnalyses[detectedType];
+return `${analysis}\n\nI can help answer any specific questions you have about this ${detectedType}.`;
+}
+const settingsButton = document.querySelector('.ri-settings-3-line').parentElement;
+const settingsModal = document.getElementById('settings-modal');
+const closeSettings = document.getElementById('close-settings');
+settingsButton.addEventListener('click', () => {
+settingsModal.classList.remove('hidden');
+});
+closeSettings.addEventListener('click', () => {
+settingsModal.classList.add('hidden');
+});
+const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+async function sendMessage() {
+const content = messageInput.value.trim();
+if (content || currentImage) {
+const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+// Add user message
+mockMessages.push({
+id: mockMessages.length + 1,
+role: 'user',
+content,
+timestamp: currentTime
+});
+messageInput.value = '';
+renderMessages();
+// Show typing indicator
+mockMessages.push({
+id: mockMessages.length + 1,
+role: 'assistant',
+content: 'Searching...',
+timestamp: currentTime
+});
+renderMessages();
+// Get results based on input type
+let response;
+if (currentImage) {
+response = await analyzeImage(currentImage);
+if (content) {
+response += "\n\nRegarding your question: " + await searchWeb(content);
+}
+// Clear image after processing
+imagePreview.classList.add('hidden');
+preview.src = '';
+currentImage = null;
+imageUpload.value = '';
+imageScan.value = '';
+} else {
+response = await searchWeb(content);
+}
+// Replace typing indicator with actual response
+mockMessages.pop(); // Remove typing indicator
+mockMessages.push({
+id: mockMessages.length + 1,
+role: 'assistant',
+content: response,
+timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+});
+renderMessages();
+}
+}
+sendButton.addEventListener('click', sendMessage);
+messageInput.addEventListener('keydown', (e) => {
+if (e.key === 'Enter' && !e.shiftKey) {
+e.preventDefault();
+sendMessage();
+} else if (e.key === 'Enter' && e.shiftKey) {
+const start = messageInput.selectionStart;
+const end = messageInput.selectionEnd;
+const value = messageInput.value;
+messageInput.value = value.substring(0, start) + '\n' + value.substring(end);
+messageInput.selectionStart = messageInput.selectionEnd = start + 1;
+}
+});
+});
+</script>
+</body>
+</html>
